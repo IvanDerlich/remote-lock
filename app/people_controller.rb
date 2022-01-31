@@ -4,7 +4,6 @@ class PeopleController
   end
 
   def normalize
-    puts "----Begining" 
     people = []
 
     dollar_people = process_dollar @params[:dollar_format].lines[1..-1]
@@ -15,7 +14,7 @@ class PeopleController
 
     people = sort people.flatten
     
-    compose people
+    present people
   end
 
   private
@@ -42,8 +41,6 @@ class PeopleController
     output = text_array.map do |input|
       splitted = input.split(' % ')
       splitted_birthdate = splitted[2].split('-')
-      p splitted[2]
-      p splitted_birthdate
       {
         name: splitted[0],
         city: splitted[1],      
@@ -60,7 +57,7 @@ class PeopleController
     end
   end  
 
-  def compose people
+  def present people
     output = people.map do |element|
       "#{element[:name]}, #{element[:city]}, #{element[:month]}/#{element[:day]}/#{element[:year]}"
     end
